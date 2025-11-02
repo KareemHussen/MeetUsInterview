@@ -1,0 +1,96 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-tasks-table
+      author: meetus-team
+      changes:
+        - createTable:
+            tableName: tasks
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: VARCHAR(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: TEXT
+              - column:
+                  name: status
+                  type: VARCHAR(20)
+                  defaultValue: OPEN
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+      rollback:
+        - dropTable:
+            tableName: tasks
+
+  - changeSet:
+      id: 002-add-foreign-key-tasks-user
+      author: meetus-team
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: tasks
+            baseColumnNames: user_id
+            constraintName: fk_tasks_user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: CASCADE
+      rollback:
+        - dropForeignKeyConstraint:
+            baseTableName: tasks
+            constraintName: fk_tasks_user_id
+
+  - changeSet:
+      id: 003-create-tasks-user-id-index
+      author: meetus-team
+      changes:
+        - createIndex:
+            indexName: idx_tasks_user_id
+            tableName: tasks
+            columns:
+              - column:
+                  name: user_id
+      rollback:
+        - dropIndex:
+            indexName: idx_tasks_user_id
+            tableName: tasks
+
+  - changeSet:
+      id: 004-create-tasks-status-index
+      author: meetus-team
+      changes:
+        - createIndex:
+            indexName: idx_tasks_status
+            tableName: tasks
+            columns:
+              - column:
+                  name: status
+      rollback:
+        - dropIndex:
+            indexName: idx_tasks_status
+            tableName: tasks
