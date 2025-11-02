@@ -174,7 +174,7 @@ http://127.0.0.1:8080/api/v1/swagger-ui/index.html#/
 ## 📎 Postman Collection
 
 Download API collection:
-👉 [MeetUS Interview - Task Management API.postman_collection.json](./MeetUS Interview - Task Management API.postman_collection.json)
+👉 [MeetUS-Interview-Task-Management-API.postman_collection.json](./MeetUS-Interview-Task-Management-API.postman_collection.json)
 
 
 ## 🌐 Profiles
